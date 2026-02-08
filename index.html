@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الطالب الجامعي</title>
+<style>
+body {font-family: Arial, sans-serif; background-color: #e0f7fa; text-align: center; padding: 20px;}
+header img {width: 150px; border-radius: 10px;}
+h1,h2,h3 { color: #00796b; }
+.nav button {display: inline-block; margin: 5px; padding: 10px 15px; background-color: #004d40; color: white; border: none; border-radius: 5px; cursor: pointer;}
+.nav button:hover { background-color: #00796b; }
+.semester-block { display: none; margin-top: 20px; border: 2px solid #00796b; border-radius: 10px; padding: 15px; background-color: #ffffff; width: 90%; max-width: 700px; margin-left:auto; margin-right:auto; text-align:center;}
+.subject {border:2px solid #00796b; border-radius:10px; padding:10px; margin:10px auto;}
+.subject input[type="number"] { width: 60px; margin: 5px 0; }
+button.calc {margin-top:10px; padding:10px 20px; background-color:green;color:white; border:none;border-radius:8px; cursor:pointer;}
+button.calc:hover{background-color:darkgreen;}
+#result_1,#result_2,#result_3,#result_4,#result_5,#result_6 {margin-top:10px; font-weight:bold; color:#004d40;}
+</style>
+</head>
+<body>
+
+<header>
+<img src="12.jpg" alt="شعار الطالب الجامعي">
+<h1> برنامج الطالب الجامعي كلية الحقوق الجلفة</h1>
+</header>
+
+<div class="nav">
+<h2>اختر السنة:</h2>
+<button onclick="showYear('year1')">السنة الأولى</button>
+<button onclick="showYear('year2')">السنة الثانية</button>
+<button onclick="showYear('year3')">السنة الثالثة</button>
+</div>
+
+<!-- ==================== السنوات ==================== -->
+<div id="year1" class="semester-content" style="display:none;">
+<h2>السنة الأولى</h2>
+<h3>اختر السداسي:</h3>
+<button onclick="showSemester('sem1')">السداسي الأول</button>
+<button onclick="showSemester('sem2')">السداسي الثاني</button>
+</div>
+
+<div id="year2" class="semester-content" style="display:none;">
+<h2>السنة الثانية</h2>
+<h3>اختر السداسي:</h3>
+<button onclick="showSemester('sem3')">السداسي الثالث</button>
+<button onclick="showSemester('sem4')">السداسي الرابع</button>
+</div>
+
+<div id="year3" class="semester-content" style="display:none;">
+<h2>السنة الثالثة</h2>
+<h3>اختر السداسي:</h3>
+<button onclick="showSemester('sem5')">السداسي الخامس</button>
+<button onclick="showSemester('sem6')">السداسي السادس</button>
+</div>
+
+<!-- ==================== السداسيات ==================== -->
+
+<!-- ==== السداسي الأول ==== -->
+<div id="sem1" class="semester-block">
+<h3>السداسي الأول</h3>
+<label>اختر نسبة TD/Exam: 
+<select id="ratio_1"><option value="50">50 / 50</option><option value="60">60 / 40</option></select></label>
+<div class="subject">مدخل للقانون<br>TD: <input type="number" id="td_1_1"> Exam: <input type="number" id="exam_1_1"><br>معامل 2</div>
+<div class="subject">قانون دستوري<br>TD: <input type="number" id="td_1_2"> Exam: <input type="number" id="exam_1_2"><br>معامل 2</div>
+<div class="subject">مدخل للقانون الإداري<br>TD: <input type="number" id="td_1_3"> Exam: <input type="number" id="exam_1_3"><br>معامل 1</div>
+<div class="subject">منهجية العلوم القانونية<br>Exam: <input type="number" id="exam_1_4"><br>معامل 1</div>
+<div class="subject">تاريخ النظم<br>Exam: <input type="number" id="exam_1_5"><br>معامل 1</div>
+<div class="subject">المجتمع الدولي<br>Exam: <input type="number" id="exam_1_6"><br>معامل 1</div>
+<div class="subject">لغة أجنبية<br>Exam: <input type="number" id="exam_1_7"><br>معامل 1</div>
+<button class="calc" onclick="calculateSemester(1)">احسب معدل السداسي</button>
+<div id="result_1"></div>
+</div>
+
+<!-- ==== السداسي الثاني ==== -->
+<div id="sem2" class="semester-block">
+<h3>السداسي الثاني</h3>
+<label>اختر نسبة TD/Exam: 
+<select id="ratio_2"><option value="50">50 / 50</option><option value="60">60 / 40</option></select></label>
+<div class="subject">مدخل للقانون<br>TD: <input type="number" id="td_2_1"> Exam: <input type="number" id="exam_2_1"><br>معامل 2</div>
+<div class="subject">قانون دستوري<br>TD: <input type="number" id="td_2_2"> Exam: <input type="number" id="exam_2_2"><br>معامل 2</div>
+<div class="subject">مدخل للقانون الإداري<br>TD: <input type="number" id="td_2_3"> Exam: <input type="number" id="exam_2_3"><br>معامل 1</div>
+<div class="subject">منهجية العلوم القانونية<br>Exam: <input type="number" id="exam_2_4"><br>معامل 1</div>
+<div class="subject">الشريعة الإسلامية<br>Exam: <input type="number" id="exam_2_5"><br>معامل 1</div>
+<div class="subject">اقتصاد سياسي<br>Exam: <input type="number" id="exam_2_6"><br>معامل 1</div>
+<div class="subject">لغة أجنبية<br>Exam: <input type="number" id="exam_2_7"><br>معامل 1</div>
+<button class="calc" onclick="calculateSemester(2)">احسب معدل السداسي</button>
+<div id="result_2"></div>
+</div>
+
+<!-- ==== السداسي الثالث ==== -->
+<div id="sem3" class="semester-block">
+<h3>السداسي الثالث</h3>
+<label>اختر نسبة TD/Exam: 
+<select id="ratio_3"><option value="50">50 / 50</option><option value="60">60 / 40</option></select></label>
+<div class="subject">القانون المدني<br>TD: <input type="number" id="td_3_1"> Exam: <input type="number" id="exam_3_1"><br>معامل 2</div>
+<div class="subject">القانون التجاري<br>TD: <input type="number" id="td_3_2"> Exam: <input type="number" id="exam_3_2"><br>معامل 1</div>
+<div class="subject">النظرية العامة للجريمة والعقوبة<br>TD: <input type="number" id="td_3_3"> Exam: <input type="number" id="exam_3_3"><br>معامل 2</div>
+<div class="subject">منهجية العلوم القانونية<br>Exam: <input type="number" id="exam_3_4"><br>معامل 1</div>
+<div class="subject">القانون الدولي العام<br>Exam: <input type="number" id="exam_3_5"><br>معامل 2</div>
+<div class="subject">قانون الأسرة<br>Exam: <input type="number" id="exam_3_6"><br>معامل 1</div>
+<div class="subject">لغة أجنبية<br>Exam: <input type="number" id="exam_3_7"><br>معامل 1</div>
+<button class="calc" onclick="calculateSemester(3)">احسب معدل السداسي</button>
+<div id="result_3"></div>
+</div>
+
+<!-- ==== السداسي الرابع ==== -->
+<div id="sem4" class="semester-block">
+<h3>السداسي الرابع</h3>
+<label>اختر نسبة TD/Exam: 
+<select id="ratio_4"><option value="50">50 / 50</option><option value="60">60 / 40</option></select></label>
+<div class="subject">القانون المدني<br>TD: <input type="number" id="td_4_1"> Exam: <input type="number" id="exam_4_1"><br>معامل 2</div>
+<div class="subject">قانون الإجراءات المدنية<br>TD: <input type="number" id="td_4_2"> Exam: <input type="number" id="exam_4_2"><br>معامل 1</div>
+<div class="subject">قانون الإجراءات الجزائية<br>TD: <input type="number" id="td_4_3"> Exam: <input type="number" id="exam_4_3"><br>معامل 2</div>
+<div class="subject">منهجية العلوم القانونية<br>Exam: <input type="number" id="exam_4_4"><br>معامل 1</div>
+<div class="subject">حقوق الإنسان<br>Exam: <input type="number" id="exam_4_5"><br>معامل 1</div>
+<div class="subject">قانون العمل<br>Exam: <input type="number" id="exam_4_6"><br>معامل 1</div>
+<div class="subject">لغة أجنبية<br>Exam: <input type="number" id="exam_4_7"><br>معامل 1</div>
+<button class="calc" onclick="calculateSemester(4)">احسب معدل السداسي</button>
+<div id="result_4"></div>
+</div>
+
+<!-- ==== السداسي الخامس ==== -->
+<div id="sem5" class="semester-block">
+<h3>السداسي الخامس</h3>
+<label>اختر نسبة TD/Exam: 
+<select id="ratio_5"><option value="50">50 / 50</option><option value="60">60 / 40</option></select></label>
+<div class="subject">القرارات والعقود الإدارية<br>TD: <input type="number" id="td_5_1"> Exam: <input type="number" id="exam_5_1"><br>معامل 2</div>
+<div class="subject">القانون الاقتصادي العام<br>TD: <input type="number" id="td_5_2"> Exam: <input type="number" id="exam_5_2"><br>معامل 2</div>
+<div class="subject">الحريات العامة<br>TD: <input type="number" id="td_5_3"> Exam: <input type="number" id="exam_5_3"><br>معامل 1</div>
+<div class="subject">مقارنة الأنظمة القانونية<br>Exam: <input type="number" id="exam_5_4"><br>معامل 1</div>
+<div class="subject">قانون مكافحة الفساد<br>Exam: <input type="number" id="exam_5_5"><br>معامل 1</div>
+<div class="subject">قانون البيئة والتنمية المستدامة<br>Exam: <input type="number" id="exam_5_6"><br>معامل 1</div>
+<div class="subject">الملكية الفكرية<br>Exam: <input type="number" id="exam_5_7"><br>معامل 1</div>
+<div class="subject">لغة أجنبية<br>Exam: <input type="number" id="exam_5_8"><br>معامل 1</div>
+<button class="calc" onclick="calculateSemester(5)">احسب معدل السداسي</button>
+<div id="result_5"></div>
+</div>
+
+<!-- ==== السداسي السادس ==== -->
+<div id="sem6" class="semester-block">
+<h3>السداسي السادس</h3>
+<label>اختر نسبة TD/Exam: 
+<select id="ratio_6"><option value="50">50 / 50</option><option value="60">60 / 40</option></select></label>
+<div class="subject">المنازعات الإدارية<br>TD: <input type="number" id="td_6_1"> Exam: <input type="number" id="exam_6_1"><br>معامل 2</div>
+<div class="subject">الوظيفة العامة<br>TD: <input type="number" id="td_6_2"> Exam: <input type="number" id="exam_6_2"><br>معامل 1</div>
+<div class="subject">قانون العلاقات الدولية<br>TD: <input type="number" id="td_6_3"> Exam: <input type="number" id="exam_6_3"><br>معامل 1</div>
+<div class="subject">ملتقى منهجية<br>Exam: <input type="number" id="exam_6_4"><br>معامل 1</div>
+<div class="subject">القانون والقضايا الجنائية الدولية<br>Exam: <input type="number" id="exam_6_5"><br>معامل 1</div>
+<div class="subject">القانون الدولي الإنساني<br>Exam: <input type="number" id="exam_6_6"><br>معامل 1</div>
+<div class="subject">المالية العامة<br>Exam: <input type="number" id="exam_6_7"><br>معامل 1</div>
+<div class="subject">لغة أجنبية<br>Exam: <input type="number" id="exam_6_8"><br>معامل 1</div>
+<button class="calc" onclick="calculateSemester(6)">احسب معدل السداسي</button>
+<div id="result_6"></div>
+</div>
+
+<script>
+function showYear(yearId){
+  document.querySelectorAll('.semester-content').forEach(d=>d.style.display='none');
+  document.querySelectorAll('.semester-block').forEach(d=>d.style.display='none');
+  document.getElementById(yearId).style.display='block';
+}
+
+function showSemester(semId){
+  document.querySelectorAll('.semester-block').forEach(d=>d.style.display='none');
+  document.getElementById(semId).style.display='block';
+}
+
+const semesterSubjects = {
+1:[2,2,1,1,1,1,1],
+2:[2,2,1,1,1,1,1],
+3:[2,1,2,1,2,1,1],
+4:[2,1,2,1,1,1,1],
+5:[2,2,1,1,1,1,1,1],
+6:[2,1,1,1,1,1,1,1]
+};
+
+function calculateSemester(sem){
+  const coeffs = semesterSubjects[sem];
+  const ratio = parseInt(document.getElementById('ratio_'+sem).value)/100;
+  let total=0, totalCoeff=0;
+  for(let i=0;i<coeffs.length;i++){
+    const tdInput=document.getElementById(`td_${sem}_${i+1}`);
+    const examInput=document.getElementById(`exam_${sem}_${i+1}`);
+    const td = tdInput ? parseFloat(tdInput.value)||0 : null;
+    const exam = examInput ? parseFloat(examInput.value)||0 : 0;
+    const grade = td!==null ? td*ratio + exam*(1-ratio) : exam;
+    total += grade*coeffs[i];
+    totalCoeff += coeffs[i];
+  }
+  const average = total/totalCoeff;
+  document.getElementById('result_'+sem).innerText = "المعدل النهائي للسداسي: " + average.toFixed(2);
+}
+</script>
+
+</body>
+</html>
