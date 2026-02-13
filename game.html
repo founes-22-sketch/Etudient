@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>⚖️ لعبة المصطلحات القانونية - بالضغط مع مساعدة</title>
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#1d2671,#c33764);
+    text-align:center;
+    color:white;
+    padding:15px;
+}
+
+.container{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:20px;
+    max-width:750px;
+    margin:auto;
+}
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.answer-box{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin:20px 0;
+    direction:ltr;
+}
+
+.answer-letter{
+    width:42px;
+    height:42px;
+    border:2px solid #1d2671;
+    margin:5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.letters{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.letters button{
+    width:45px;
+    height:45px;
+    margin:5px;
+    font-size:20px;
+    border:none;
+    background:#1d2671;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.hint-btn{
+    background:orange;
+    color:black;
+    font-weight:bold;
+    padding:8px 20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.hint-locked{
+    background:gray !important;
+    cursor:not-allowed;
+}
+
+.undo-btn{
+    background:#555;
+    color:white;
+    font-weight:bold;
+    padding:8px 15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.visitors{
+    margin-top:10px;
+    font-weight:bold;
+    color:#ffeb3b;
+}
+</style>
+</head>
+<body>
+
+<h1>⚖️ لعبة المصطلحات القانونية</h1>
+
+<div class="container">
+
+<div class="top-bar">
+<div>🏆 النقاط: <span id="score">0</span></div>
+<div>📘 الكلمة رقم: <span id="wordNumber">1</span></div>
+<div>
+<button class="hint-btn" id="hintBtn" onclick="useHint()">💡 مساعدة</button>
+</div>
+</div>
+
+<h3 id="arabicWord"></h3>
+<div class="answer-box" id="answer"></div>
+<div class="letters" id="letters"></div>
+
+<div class="control">
+<button class="undo-btn" onclick="undo()">↩ تراجع</button>
+</div>
+
+<div class="visitors">👥 عدد الزوار: <span id="visitorCount">0</span></div>
+
+</div>
+
+<script>
+
+let score = 0;
+let currentIndex = 0;
+let usedLetters = [];
+
+// 🌟 كلمات المثال
+const wordBank = [
+
+{ar:"عقد",en:"contract"},
+{ar:"جريمة",en:"crime"},
+{ar:"محكمة",en:"court"},
+{ar:"دستور",en:"constitution"},
+{ar:"استئناف",en:"appeal"},
+{ar:"قانون",en:"law"},
+{ar:"مدعي",en:"plaintiff"},
+{ar:"متهم",en:"defendant"},
+{ar:"شاهد",en:"witness"},
+{ar:"حكم",en:"judgment"},
+{ar:"دعوى",en:"lawsuit"},
+{ar:"عقوبة",en:"penalty"},
+{ar:"شريعة",en:"sharia"},
+{ar:"محام",en:"lawyer"},
+{ar:"اتفاقية",en:"agreement"},
+{ar:"تحقيق",en:"investigation"},
+{ar:"سجن",en:"prison"},
+{ar:"حق",en:"right"},
+{ar:"التزامات",en:"obligations"},
+{ar:"توكيل",en:"power of attorney"},
+{ar:"وساطة",en:"mediation"},
+{ar:"إفراج",en:"release"},
+{ar:"تنفيذ",en:"enforcement"},
+{ar:"إدانة",en:"conviction"},
+{ar:"تبرئة",en:"acquittal"},
+{ar:"إجراءات",en:"procedures"},
+{ar:"تحكيم",en:"arbitration"},
+{ar:"دعوى مدنية",en:"civil suit"},
+{ar:"دعوى جنائية",en:"criminal case"},
+{ar:"تشهير",en:"defamation"},
+{ar:"ضمان",en:"guarantee"},
+{ar:"تصفية",en:"liquidation"},
+{ar:"إرث",en:"inheritance"},
+{ar:"وصية",en:"will"},
+{ar:"وصي",en:"guardian"},
+{ar:"تحفظ",en:"precaution"},
+{ar:"إفلاس",en:"bankruptcy"},
+{ar:"ممتلكات",en:"property"},
+{ar:"عقار",en:"real estate"},
+{ar:"إيجار",en:"lease"},
+{ar:"تراخيص",en:"licenses"},
+{ar:"تخلف عن السداد",en:"default"},
+{ar:"مسؤولية",en:"liability"},
+{ar:"إخطار",en:"notice"},
+{ar:"شهادة",en:"certificate"},
+{ar:"حجز",en:"seizure"},
+{ar:"ضمانة",en:"collateral"},
+{ar:"قاضٍ",en:"judge"},
+{ar:"مستشار قانوني",en:"legal advisor"},
+{ar:"مرافعة",en:"plea"},
+{ar:"صفقة",en:"deal"},
+{ar:"امتياز",en:"privilege"},
+{ar:"نزاع",en:"dispute"},
+{ar:"مصالحة",en:"reconciliation"},
+{ar:"تعويض",en:"compensation"},
+{ar:"خدمة",en:"service"},
+{ar:"شروط",en:"terms"},
+{ar:"أحكام",en:"provisions"},
+{ar:"قرار",en:"decision"},
+{ar:"تنظيم",en:"regulation"},
+{ar:"نظام",en:"system"},
+{ar:"تعديل",en:"amendment"},
+{ar:"إلغاء",en:"repeal"},
+{ar:"دليل",en:"evidence"},
+{ar:"استشارة",en:"consultation"},
+{ar:"تحفظ قضائي",en:"injunction"},
+{ar:"إجراءات أولية",en:"preliminary procedures"},
+{ar:"مذكرة",en:"memorandum"},
+{ar:"توكيل رسمي",en:"official power of attorney"},
+{ar:"نقض",en:"cassation"},
+{ar:"تقرير",en:"report"},
+{ar:"بلاغ",en:"complaint"},
+{ar:"إدعاء",en:"claim"},
+{ar:"دعوى استعجالية",en:"urgent suit"},
+{ar:"تفتيش",en:"inspection"},
+{ar:"إستجواب",en:"interrogation"},
+{ar:"محكمة استئناف",en:"appeals court"},
+{ar:"محكمة عليا",en:"supreme court"},
+{ar:"محكمة ابتدائية",en:"primary court"},
+{ar:"قانون جنائي",en:"criminal law"},
+{ar:"قانون مدني",en:"civil law"},
+{ar:"قانون تجاري",en:"commercial law"},
+{ar:"قانون العمل",en:"labor law"},
+{ar:"قانون الأسرة",en:"family law"},
+{ar:"إجراءات قانونية",en:"legal procedures"},
+{ar:"حقوق الإنسان",en:"human rights"},
+{ar:"حماية الطفل",en:"child protection"},
+{ar:"حماية المستهلك",en:"consumer protection"},
+{ar:"تنظيم العمل",en:"work regulation"},
+{ar:"ملكية فكرية",en:"intellectual property"},
+{ar:"حقوق التأليف",en:"copyright"},
+{ar:"علامة تجارية",en:"trademark"},
+{ar:"براءة اختراع",en:"patent"},
+{ar:"نزاع تجاري",en:"commercial dispute"},
+{ar:"تجارة إلكترونية",en:"e-commerce"},
+{ar:"إفصاح",en:"disclosure"},
+{ar:"سرية",en:"confidentiality"},
+{ar:"إلتزام قانوني",en:"legal obligation"},
+{ar:"مخالفة",en:"violation"},
+{ar:"مراقبة",en:"supervision"},
+{ar:"إشراف",en:"oversight"},
+{ar:"مسطرة",en:"procedure"}
+
+];
+
+// 🌟 عد الزوار (محلي)
+if(!localStorage.getItem("visitorCount")){
+    localStorage.setItem("visitorCount", "1");
+} else {
+    localStorage.setItem("visitorCount", parseInt(localStorage.getItem("visitorCount"))+1);
+}
+document.getElementById("visitorCount").innerText = localStorage.getItem("visitorCount");
+
+function shuffleArray(array){
+    return array.sort(()=>0.5 - Math.random());
+}
+
+let levels = shuffleArray([...wordBank]);
+
+function loadWord(){
+
+    if(currentIndex >= levels.length){
+        alert("🏆 انتهت اللعبة! مجموع نقاطك: "+score);
+        location.reload();
+        return;
+    }
+
+    usedLetters=[];
+    document.getElementById("answer").innerHTML="";
+    document.getElementById("letters").innerHTML="";
+    document.getElementById("arabicWord").innerText="المصطلح: "+levels[currentIndex].ar;
+    document.getElementById("wordNumber").innerText=currentIndex+1;
+
+    let word=levels[currentIndex].en;
+
+    // إنشاء صناديق للإجابة
+    for(let i=0;i<word.length;i++){
+        let box=document.createElement("div");
+        box.className="answer-letter";
+        box.id="box"+i;
+        document.getElementById("answer").appendChild(box);
+    }
+
+    // إنشاء حروف عشوائية للضغط
+    shuffleArray(word.split('')).forEach((letter,i)=>{
+        let btn=document.createElement("button");
+        btn.innerText=letter;
+        btn.id="letter"+i;
+        btn.onclick=()=>addLetter(letter,btn);
+        document.getElementById("letters").appendChild(btn);
+    });
+
+    // إعادة تفعيل زر المساعدة
+    const hintBtn = document.getElementById("hintBtn");
+    hintBtn.classList.remove("hint-locked");
+    hintBtn.disabled=false;
+}
+
+// 🌟 عند الضغط على حرف: يذهب لأول صندوق فارغ
+function addLetter(letter, btn){
+    let boxes = document.querySelectorAll(".answer-letter");
+    for(let box of boxes){
+        if(box.innerText===""){
+            box.innerText = letter;
+            usedLetters.push({btn: btn, box: box});
+            btn.style.visibility = "hidden";
+            break;
+        }
+    }
+
+    checkAnswer();
+}
+
+// 🌟 تحقق الكلمة كاملة
+function checkAnswer(){
+    let word = levels[currentIndex].en;
+    let userAnswer = "";
+    document.querySelectorAll(".answer-letter").forEach(b=>userAnswer+=b.innerText);
+    if(userAnswer.length === word.length){
+        if(userAnswer === word){
+            score+=5;
+            document.getElementById("score").innerText=score;
+            currentIndex++;
+            setTimeout(loadWord,600);
+        } else {
+            alert("❌ الإجابة خاطئة! حاول مرة أخرى.");
+        }
+    }
+}
+
+// 🌟 تراجع
+function undo(){
+    if(usedLetters.length > 0){
+        let last = usedLetters.pop();
+        last.box.innerText = "";
+        last.btn.style.visibility = "visible";
+    }
+}
+
+// 🌟 أداة المساعدة: ضع حرفين صحيحين
+function useHint(){
+    let word = levels[currentIndex].en;
+    let boxes = document.querySelectorAll(".answer-letter");
+    let emptyIndexes = [];
+    for(let i=0;i<boxes.length;i++){
+        if(boxes[i].innerText===""){
+            emptyIndexes.push(i);
+        }
+    }
+
+    if(emptyIndexes.length===0){
+        return;
+    }
+
+    let lettersPlaced = 0;
+    for(let idx of emptyIndexes){
+        if(lettersPlaced>=2) break;
+        let correctLetter = word[idx];
+        let buttons = document.querySelectorAll(".letters button");
+        for(let btn of buttons){
+            if(btn.innerText===correctLetter && btn.style.visibility!=="hidden"){
+                addLetter(correctLetter,btn);
+                lettersPlaced++;
+                break;
+            }
+        }
+    }
+
+    // إذا لم يعد هناك أي صندوق فارغ، اقفل زر المساعدة
+    if(document.querySelectorAll(".answer-letter").length === document.querySelectorAll(".answer-letter:empty").length){
+        const hintBtn = document.getElementById("hintBtn");
+        hintBtn.classList.add("hint-locked");
+        hintBtn.disabled=true;
+    }
+}
+
+loadWord();
+
+</script>
+</body>
+</html>
