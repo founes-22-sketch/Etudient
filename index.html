@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>برنامج الطالب الجامعي - حقوق الجلفة</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
- 
+
 <style>
 *{
   margin:0;
@@ -12,28 +12,27 @@
   box-sizing:border-box;
   font-family:'Cairo',sans-serif;
 }
- 
+
 body{
   background: radial-gradient(circle at top left,#1e1e2f,#0f2027,#203a43,#2c5364);
   color:white;
   min-height:100vh;
   overflow-x:hidden;
 }
- 
+
 .navbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:20px 40px;
-  position:relative;
 }
- 
+
 .logo{
   font-size:22px;
   font-weight:900;
   color:#00ffcc;
 }
- 
+
 .navbar button{
   background:#00c896;
   border:none;
@@ -44,19 +43,10 @@ body{
   font-weight:bold;
   transition:.3s;
 }
- 
+
 .navbar button:hover{
   background:#00ffcc;
   color:black;
-}
-
-/* عداد الزوار */
-#visitorCount{
-  position:absolute;
-  bottom:-25px;
-  left:40px;
-  font-weight:bold;
-  color:#ffd54f;
 }
 
 .hero{
@@ -68,17 +58,16 @@ body{
   margin-top:40px;
   text-align:center;
 }
- 
+
 .hero-text h1{
   font-size:38px;
   margin-bottom:10px;
 }
- 
+
 .hero-text p{
   opacity:.8;
 }
- 
-/* الصورة دائرية بالكامل */
+
 .hero-img{
   width:250px;
   height:250px;
@@ -92,12 +81,12 @@ body{
   height:100%;
   object-fit:cover;
 }
- 
+
 .section{
   text-align:center;
   margin-top:40px;
 }
- 
+
 .section button{
   margin:8px;
   padding:10px 20px;
@@ -108,12 +97,12 @@ body{
   cursor:pointer;
   transition:.3s;
 }
- 
+
 .section button:hover{
   background:#00ffcc;
   color:black;
 }
- 
+
 .semester-block{
   display:none;
   margin:40px auto;
@@ -124,14 +113,14 @@ body{
   max-width:900px;
   backdrop-filter:blur(10px);
 }
- 
+
 .subject{
   background:rgba(255,255,255,0.15);
   margin:8px 0;
   padding:10px;
   border-radius:10px;
 }
- 
+
 .subject input{
   width:60px;
   padding:5px;
@@ -139,14 +128,14 @@ body{
   border:none;
   text-align:center;
 }
- 
+
 select{
   padding:5px;
   border-radius:5px;
   border:none;
   margin:10px 0;
 }
- 
+
 .calc{
   margin-top:15px;
   padding:10px 20px;
@@ -156,39 +145,55 @@ select{
   cursor:pointer;
   font-weight:bold;
 }
- 
+
 .calc:hover{
   background:#00c896;
 }
- 
+
 .result{
   margin-top:10px;
   font-weight:bold;
   color:#ffd54f;
 }
- 
+
 .star{
   position:absolute;
   color:yellow;
   font-size:20px;
   animation: float 2s linear forwards;
 }
- 
+
 @keyframes float{
   0%{transform:translateY(0) scale(1); opacity:1;}
   100%{transform:translateY(-200px) scale(1.5); opacity:0;}
 }
+
+/* زر لعبة المصطلحات */
+.game-btn{
+  margin-top:20px;
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:#ff9800;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+}
+.game-btn:hover{
+  background:#ffc107;
+  color:black;
+}
 </style>
 </head>
- 
+
 <body>
- 
+
 <div class="navbar">
   <div class="logo">برنامج الطالب الجامعي - حقوق الجلفة</div>
   <button onclick="window.location.href='lessons.html'">تحميل الدروس</button>
-  <div id="visitorCount">عدد الزوار: 0</div>
 </div>
- 
+
 <div class="hero">
   <div class="hero-text">
     <h1>حاسبة معدل السداسي</h1>
@@ -198,32 +203,25 @@ select{
     <img src="12.jpg" alt="صورة الطالب">
   </div>
 </div>
- 
-<!-- اختيار السنة -->
+
 <div class="section" id="yearSection">
   <h2>اختر السنة</h2>
   <button onclick="showSemesters(1)">السنة الأولى</button>
   <button onclick="showSemesters(2)">السنة الثانية</button>
   <button onclick="showSemesters(3)">السنة الثالثة</button>
 </div>
- 
-<!-- اختيار السداسي -->
+
 <div class="section" id="semesterSection" style="display:none;">
   <h2>اختر السداسي</h2>
   <div id="semesterButtons"></div>
 </div>
- 
-<script>
-// ================= عداد الزوار باستخدام CountAPI =================
-fetch('https://api.countapi.xyz/hit/myuniversity2026/program-student')
-.then(res => res.json())
-.then(data => {
-  document.getElementById('visitorCount').innerText = "عدد الزوار: " + data.value;
-})
-.catch(err => console.log(err));
-// =============================================================
 
-// بيانات السداسيات والمواد
+<!-- زر لعبة المصطلحات ثابت أسفل الصفحة -->
+<div style="text-align:center; margin-top:30px;">
+  <button class="game-btn" onclick="window.location.href='game.html'">لعبة المصطلحات القانونية الإنجليزية</button>
+</div>
+
+<script>
 const semesters={
 1:{
 1:[["مدخل للقانون",2,true],["قانون دستوري",2,true],["التنظيم القضائي",1,true],["منهجية العلوم القانونية",1,false],["تاريخ النظم",1,false],["المجتمع الدولي",1,false],["لغة أجنبية",1,false]],
@@ -269,10 +267,18 @@ function createSemester(year,sem){
     </div>`;
   });
 
+  // زر لعبة المصطلحات داخل السداسي
+  div.innerHTML+=`<button class="game-btn" onclick="openGame()">لعبة المصطلحات الإنجليزية</button>`;
+
   div.innerHTML+=`<button class="calc" onclick="calculate(${year},${sem})">احسب المعدل</button>
   <div id="result" class="result"></div>`;
 
   document.body.appendChild(div);
+}
+
+// دالة فتح اللعبة
+function openGame(){
+  window.location.href="game.html";
 }
 
 function calculate(year,sem){
@@ -314,6 +320,6 @@ function calculate(year,sem){
   }
 }
 </script>
- 
+
 </body>
 </html>
