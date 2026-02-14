@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>برنامج الطالب الجامعي - حقوق الجلفة</title>
+
+<meta name="description" content="برنامج الطالب الجامعي - حقوق الجلفة. حاسبة معدل السداسي لطلبة الحقوق بطريقة سهلة واحترافية.">
+<meta name="keywords" content="حقوق الجلفة, حاسبة معدل, قانون, جامعة الجلفة, طلبة الحقوق, حساب معدل السداسي">
+<meta name="author" content="AISSA Sparo">
+<meta name="robots" content="index, follow">
+<meta name="language" content="Arabic">
+<meta name="revisit-after" content="7 days">
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
@@ -17,7 +25,7 @@ body{
   background: radial-gradient(circle at top left,#1e1e2f,#0f2027,#203a43,#2c5364);
   color:white;
   min-height:100vh;
-  overflow-x:hidden;
+  position:relative;
 }
 
 .navbar{
@@ -25,12 +33,19 @@ body{
   justify-content:space-between;
   align-items:center;
   padding:20px 40px;
+  flex-wrap:wrap;
 }
 
 .logo{
   font-size:22px;
   font-weight:900;
   color:#00ffcc;
+}
+
+.nav-buttons{
+  display:flex;
+  gap:15px;
+  align-items:center;
 }
 
 .navbar button{
@@ -49,6 +64,7 @@ body{
   color:black;
 }
 
+/* ====== تصميم الصفحة ====== */
 .hero{
   display:flex;
   justify-content:center;
@@ -168,7 +184,7 @@ select{
   100%{transform:translateY(-200px) scale(1.5); opacity:0;}
 }
 
-/* زر لعبة المصطلحات */
+/* زر لعبة المصطلحات الثابت أسفل الصفحة */
 .game-btn{
   margin-top:20px;
   padding:12px 25px;
@@ -184,14 +200,22 @@ select{
   background:#ffc107;
   color:black;
 }
+
+
 </style>
 </head>
-
 <body>
+
+<h1 style="display:none;">
+حاسبة معدل السداسي لطلبة الحقوق في جامعة الجلفة
+</h1>
 
 <div class="navbar">
   <div class="logo">برنامج الطالب الجامعي - حقوق الجلفة</div>
-  <button onclick="window.location.href='lessons.html'">تحميل الدروس</button>
+  <div class="nav-buttons">
+    <button onclick="window.location.href='lessons.html'">تحميل الدروس</button>
+    <button onclick="window.location.href='reserch.html'">📚 البحوث</button>
+  </div>
 </div>
 
 <div class="hero">
@@ -200,7 +224,7 @@ select{
     <p>اختر السنة ثم السداسي لحساب معدلك</p>
   </div>
   <div class="hero-img">
-    <img src="12.jpg" alt="صورة الطالب">
+    <img src="12.jpg" alt="برنامج الطالب الجامعي حقوق الجلفة">
   </div>
 </div>
 
@@ -216,9 +240,14 @@ select{
   <div id="semesterButtons"></div>
 </div>
 
-<!-- زر لعبة المصطلحات ثابت أسفل الصفحة -->
 <div style="text-align:center; margin-top:30px;">
   <button class="game-btn" onclick="window.location.href='game.html'">لعبة المصطلحات القانونية الإنجليزية</button>
+</div>
+
+<!-- ====== الساعة أسفل الصفحة ====== -->
+<div id="footer-clock">
+  <div class="label">الساعة بتوقيت الجزائر:</div>
+  <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
 </div>
 
 <script>
@@ -267,18 +296,10 @@ function createSemester(year,sem){
     </div>`;
   });
 
-  // زر لعبة المصطلحات داخل السداسي
-  div.innerHTML+=`<button class="game-btn" onclick="openGame()">لعبة المصطلحات الإنجليزية</button>`;
-
   div.innerHTML+=`<button class="calc" onclick="calculate(${year},${sem})">احسب المعدل</button>
   <div id="result" class="result"></div>`;
 
   document.body.appendChild(div);
-}
-
-// دالة فتح اللعبة
-function openGame(){
-  window.location.href="game.html";
 }
 
 function calculate(year,sem){
@@ -319,6 +340,8 @@ function calculate(year,sem){
     }
   }
 }
+
+
 </script>
 
 </body>
