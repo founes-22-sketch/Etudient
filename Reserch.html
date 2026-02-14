@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>صفحة البحوث - برنامج الطالب الجامعي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+body{
+  font-family:'Cairo',sans-serif;
+  background: radial-gradient(circle at top left,#1e1e2f,#0f2027,#203a43,#2c5364);
+  color:white;
+  text-align:center;
+  min-height:100vh;
+  padding:30px;
+}
+
+h1{
+  margin:20px 0 30px 0;
+  color:#00ffcc;
+}
+
+/* شبكة الأزرار */
+.grid-container{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:20px;
+  justify-items:center;
+  align-items:center;
+  margin-bottom:40px;
+}
+
+.grid-container button{
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:#00c896;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+  width:160px;
+}
+
+.grid-container button:hover{
+  background:#00ffcc;
+  color:black;
+}
+
+/* زر العودة للصفحة الرئيسية */
+.back-btn{
+  margin-bottom:20px;
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:#ff9800;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+}
+.back-btn:hover{
+  background:#ffc107;
+  color:black;
+}
+</style>
+</head>
+<body>
+
+<!-- زر العودة للصفحة الرئيسية أعلى الصفحة -->
+<button class="back-btn" onclick="window.location.href='index.html'">🏠 العودة للرئيسية</button>
+
+<h1>البحوث لكل المواد</h1>
+
+<div class="grid-container">
+  <button onclick="alert('سيتم إضافة محتوى مادة مدخل للقانون لاحقًا')">مدخل للقانون</button>
+  <button onclick="alert('سيتم إضافة محتوى مادة القانون الدستوري لاحقًا')">قانون دستوري</button>
+  <button onclick="alert('سيتم إضافة محتوى مادة التنظيم القضائي لاحقًا')">التنظيم القضائي</button>
+  <button onclick="alert('سيتم إضافة محتوى مادة المنهجية لاحقًا')">منهجية العلوم القانونية</button>
+  <button onclick="alert('سيتم إضافة محتوى مادة القانون المدني لاحقًا')">القانون المدني</button>
+  <button onclick="alert('سيتم إضافة محتوى مادة القانون التجاري لاحقًا')">القانون التجاري</button>
+  <button onclick="alert('سيتم إضافة محتوى مادة القانون الدولي العام لاحقًا')">القانون الدولي العام</button>
+</div>
+
+</body>
+</html>
