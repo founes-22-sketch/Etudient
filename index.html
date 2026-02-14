@@ -26,40 +26,41 @@ body{
   color:white;
   min-height:100vh;
   position:relative;
+  text-align:center;
+  padding:20px;
 }
 
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  flex-wrap:wrap;
+/* ====== العنوان الرئيسي و الأزرار ====== */
+.header{
+  margin-top:20px;
+  margin-bottom:30px;
 }
 
-.logo{
-  font-size:22px;
+.header h1{
+  font-size:36px;
   font-weight:900;
   color:#00ffcc;
+  margin-bottom:15px;
 }
 
-.nav-buttons{
+.header .buttons{
   display:flex;
-  gap:15px;
-  align-items:center;
+  justify-content:center;
+  gap:20px;
 }
 
-.navbar button{
+.header .buttons button{
   background:#00c896;
   border:none;
-  padding:10px 20px;
+  padding:10px 25px;
   border-radius:30px;
   color:white;
-  cursor:pointer;
   font-weight:bold;
+  cursor:pointer;
   transition:.3s;
 }
 
-.navbar button:hover{
+.header .buttons button:hover{
   background:#00ffcc;
   color:black;
 }
@@ -200,19 +201,14 @@ select{
   background:#ffc107;
   color:black;
 }
-
-
 </style>
 </head>
 <body>
 
-<h1 style="display:none;">
-حاسبة معدل السداسي لطلبة الحقوق في جامعة الجلفة
-</h1>
-
-<div class="navbar">
-  <div class="logo">برنامج الطالب الجامعي - حقوق الجلفة</div>
-  <div class="nav-buttons">
+<!-- ====== العنوان الرئيسي و الأزرار ====== -->
+<div class="header">
+  <h1>برنامج الطالب الجامعي - حقوق الجلفة</h1>
+  <div class="buttons">
     <button onclick="window.location.href='lessons.html'">تحميل الدروس</button>
     <button onclick="window.location.href='reserch.html'">📚 البحوث</button>
   </div>
@@ -334,10 +330,7 @@ function calculate(year,sem){
     }
   }
 }
-
-
 </script>
 
 </body>
 </html>
-
